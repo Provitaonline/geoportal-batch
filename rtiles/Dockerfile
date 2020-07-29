@@ -1,9 +1,7 @@
 # Use osgeo/gdal docker image
-FROM osgeo/gdal:alpine-normal-latest
+FROM osgeo/gdal:ubuntu-small-latest
 
-# Install dependencies
-RUN apk update
-RUN apk add aws-cli curl
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install
 
 WORKDIR /tmp
 COPY build-tiles.sh .
