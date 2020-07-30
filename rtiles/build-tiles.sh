@@ -20,7 +20,9 @@ echo $(timestamp): "derived name: $namelc"
 
 # Generate tiles
 echo $(timestamp): "create virtual raster with colors"
-gdaldem color-relief -alpha -exact_color_entry -of vrt $filename color.txt temp.vrt
+if [ $3 = "exact" ]; then EXACT="-exact_color_entry"; else EXACT=""; fi
+
+gdaldem color-relief -alpha $EXACT -of vrt $filename color.txt temp.vrt
 
 echo $(timestamp): "generate raster tiles"
 gdal2tiles.py --profile=mercator -q -z 4-10 temp.vrt rtiles/bosques
