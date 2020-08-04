@@ -36,6 +36,22 @@ echo $securitygroups
 
 cat compute-environment.json | jq ".computeResources += $subnets | .computeResources += {securityGroupIds: $securitygroups}" > compute-environment-updated.json
 
-aws batch create-compute-environment --cli-input-json file://compute-environment-updated.json
+# aws batch create-compute-environment --cli-input-json file://compute-environment-updated.json
 
-# TODO: create compute environment, job queues and job definitions
+# Create container repos
+#aws ecr create-repository --repository-name geoportalp-rtiles
+#aws ecr create-repository --repository-name geoportalp-vtiles
+
+# Push container images
+aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 052280825519.dkr.ecr.us-east-2.amazonaws.com
+
+# docker build -t geoportalp-rtiles ../rtiles
+# docker build -t geoportalp-vtiles ../vtiles
+
+# docker tag geoportalp-rtiles:latest 052280825519.dkr.ecr.us-east-2.amazonaws.com/geoportalp-rtiles:latest
+# docker tag geoportalp-vtiles:latest 052280825519.dkr.ecr.us-east-2.amazonaws.com/geoportalp-vtiles:latest
+
+docker push 052280825519.dkr.ecr.us-east-2.amazonaws.com/geoportalp-rtiles:latest
+docker push 052280825519.dkr.ecr.us-east-2.amazonaws.com/geoportalp-vtiles:latest
+
+# TODO: create job queues and job definitions
