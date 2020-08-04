@@ -8,3 +8,4 @@ dist
 .env.*
 package-lock.json
 yarn.lock
+scripts/compute-environment-updated.json
