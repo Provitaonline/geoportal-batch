@@ -4,7 +4,6 @@
   "state": "ENABLED",
   "computeResources": {
     "type": "SPOT",
-    "spotIamFleetRole": "arn:aws:iam::052280825519:role/aws-ec2-spot-fleet-role",
     "minvCpus": 0,
     "maxvCpus": 2,
     "desiredvCpus": 0,
@@ -15,6 +14,5 @@
     "tags": {
       "Name": "geoportal-spot"
     }
-  },
-  "serviceRole": "arn:aws:iam::052280825519:role/AWSBatchServiceRole"
+  }
 }
