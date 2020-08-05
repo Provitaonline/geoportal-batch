@@ -1,5 +1,5 @@
 {
-  "computeEnvironmentName": "geoportal-spot",
+  "computeEnvironmentName": "geoportalp-spot",
   "type": "MANAGED",
   "state": "ENABLED",
   "computeResources": {

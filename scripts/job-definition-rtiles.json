@@ -1,0 +1,26 @@
+{
+  "jobDefinitionName": "geoportalp-rtiles",
+  "type": "container",
+  "parameters": {},
+  "retryStrategy": {
+    "attempts": 2
+  },
+  "containerProperties": {
+    "vcpus": 1,
+    "memory": 1024,
+    "command": [
+      "./build-tiles.sh",
+      "Ref::inputFile",
+      "Ref::colorTable",
+      "Ref::exactColorEntry"
+    ],
+    "volumes": [],
+    "environment": [],
+    "mountPoints": [],
+    "ulimits": [],
+    "resourceRequirements": []
+  },
+  "timeout": {
+    "attemptDurationSeconds": 2400
+  }
+}

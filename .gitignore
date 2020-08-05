@@ -8,5 +8,5 @@ dist
 .env.*
 package-lock.json
 yarn.lock
-scripts/compute-environment-updated.json
+scripts/*-updated.json
 scripts/test.sh

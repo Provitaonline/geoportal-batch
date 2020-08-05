@@ -79,8 +79,17 @@ while [[ "$n" != "q" ]]; do
   fi
   if [[ $n == 4  ||  $n == 5 ]]; then
     echo "Create job queues"
+    #aws batch create-job-queue --job-queue-name geoportalp-rtiles --priority 1 --compute-environment-order order=1,computeEnvironment=arn:aws:batch:us-east-2:$AWS_ACCOUNT:compute-environment/geoportalp-spot
+    #aws batch create-job-queue --job-queue-name geoportalp-vtiles --priority 1 --compute-environment-order order=1,computeEnvironment=arn:aws:batch:us-east-2:$AWS_ACCOUNT:compute-environment/geoportalp-spot
 
     echo "Create job definitions"
+    cat job-definition-rtiles.json | jq ".containerProperties += {image: \"$AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/geoportalp-rtiles\"} |
+      .containerProperties += {jobRoleArn: \"arn:aws:iam::$AWS_ACCOUNT:role/ecsTaskExecutionRole\"}" > job-definition-rtiles-updated.json
+    aws batch register-job-definition --cli-input-json file://job-definition-rtiles-updated.json
+
+    cat job-definition-vtiles.json | jq ".containerProperties += {image: \"$AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/geoportalp-vtiles\"} |
+      .containerProperties += {jobRoleArn: \"arn:aws:iam::$AWS_ACCOUNT:role/ecsTaskExecutionRole\"}" > job-definition-vtiles-updated.json
+    aws batch register-job-definition --cli-input-json file://job-definition-vtiles-updated.json
 
   fi
   if [[ $n == 5 ]]; then
