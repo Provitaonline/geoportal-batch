@@ -44,8 +44,8 @@ The setup script provides a menu to configure/install aws requirements:
 ***********************************************
 
 Setup AWS environment to support geoportalp
-Using AWS account: 052280825519
-Region: us-east-2
+Using AWS account: XXXXXXXXXX
+Region: XX-XXXX-X
 
 ***********************************************
 
