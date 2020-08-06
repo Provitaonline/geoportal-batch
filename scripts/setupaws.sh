@@ -1,5 +1,9 @@
 #!/bin/bash
 AWS_ACCOUNT=$(aws sts get-caller-identity | jq -r .Account)
+if [ -z $AWS_ACCOUNT ]; then
+  echo "To use this script, you must be connected to AWS (aws configure)"
+  exit
+fi
 REGION=$(aws configure get region)
 while [[ "$n" != "q" ]]; do
 
