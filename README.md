@@ -26,7 +26,7 @@ rtiles
   Dockerfile (Docker image generation script)
 
 vtiles
-  build-tiles.sh (Vector tiles builde script)
+  build-tiles.sh (Vector tiles builder script)
   Dockerfile (Docker image generation script)
 
 ```
@@ -35,6 +35,7 @@ vtiles
 
 ```
 cd scripts
+aws configure (enter AWS admin details)
 ./setupaws.sh
 ```
 
