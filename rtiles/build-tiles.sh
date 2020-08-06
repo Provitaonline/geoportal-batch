@@ -2,6 +2,8 @@
 # exit on error
 set -e
 
+baseurl="https://geoportalp-files.s3-us-east-2.amazonaws.com"
+
 # Timestamp function
 timestamp() {
   date
@@ -12,8 +14,8 @@ echo $2 | sed "s/:/: /g" | tr "-" "\n" > color.txt
 
 # Get source file
 filename=$1
-echo $(timestamp): "get https://geoportalp.s3-us-west-2.amazonaws.com/files/$filename"
-curl -s -O https://geoportalp.s3-us-west-2.amazonaws.com/files/$filename
+echo $(timestamp): "$baseurl/files/$filename"
+curl -s -O $baseurl/files/$filename
 name=${filename%.*}
 namelc="$(echo "$name" | tr '[:upper:]' '[:lower:]')"
 echo $(timestamp): "derived name: $namelc"
@@ -30,7 +32,7 @@ echo -e "\n"
 
 # Copy tiles to S3
 echo $(timestamp): "remove old tiles from rtiles/$namelc"
-aws s3 rm s3://geoportalp --quiet --recursive --exclude "*" --include "rtiles/$namelc*"
+aws s3 rm s3://geoportalp-files --quiet --recursive --exclude "*" --include "rtiles/$namelc*"
 echo $(timestamp): "upload generated tiles to rtiles/$namelc"
-aws s3 cp rtiles s3://geoportalp/rtiles --acl "public-read" --quiet --recursive
+aws s3 cp rtiles s3://geoportalp-files/rtiles --acl "public-read" --quiet --recursive
 echo $(timestamp): "finished processing"

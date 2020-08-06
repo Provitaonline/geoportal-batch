@@ -10,7 +10,6 @@
     "instanceTypes": [
       "optimal"
     ],
-    "instanceRole": "ecsInstanceRole",
     "tags": {
       "Name": "geoportal-spot"
     }
