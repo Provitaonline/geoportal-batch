@@ -40,16 +40,13 @@ while [[ "$n" != "q" ]]; do
     echo "Create AWSBatchServiceRole, ecsInstanceRole, ecsTaskExecutionRole, AmazonEC2SpotFleetRole"
     aws iam create-role --role-name AWSBatchServiceRole --assume-role-policy-document file://batch-role-trust-policy.json
     aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AWSBatchServiceRole --role-name AWSBatchServiceRole
-    #aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEC2SpotFleetTaggingRole --role-name AWSBatchServiceRole
 
     aws iam create-role --role-name ecsInstanceRole --assume-role-policy-document file://ecs-role-trust-policy.json
     aws iam create-instance-profile --instance-profile-name ecsInstanceRole
-    #aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEC2SpotFleetTaggingRole --role-name ecsInstanceRole
     aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role --role-name ecsInstanceRole
     aws iam add-role-to-instance-profile --instance-profile-name ecsInstanceRole --role-name ecsInstanceRole
 
     aws iam create-role --role-name ecsTaskExecutionRole --assume-role-policy-document file://ecs-task-role-trust-policy.json
-    #aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEC2SpotFleetTaggingRole --role-name ecsTaskExecutionRole
     aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy --role-name ecsTaskExecutionRole
     aws iam attach-role-policy --policy-arn arn:aws:iam::$AWS_ACCOUNT:policy/geoportalp --role-name ecsTaskExecutionRole
 
