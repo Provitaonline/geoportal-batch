@@ -88,8 +88,8 @@ while [[ "$n" != "q" ]]; do
   if [[ $n == 4  ||  $n == 6 ]]; then
     echo "Build and tag container images"
     aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com
-    docker build -t geoportalp-rtiles ../rtiles
-    docker build -t geoportalp-vtiles ../vtiles
+    docker build -t geoportalp-rtiles -f docker/rtiles/Dockerfile .
+    docker build -t geoportalp-vtiles -f docker/vtiles/Dockerfile .
 
     docker tag geoportalp-rtiles:latest $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-rtiles:latest
     docker tag geoportalp-vtiles:latest $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-vtiles:latest

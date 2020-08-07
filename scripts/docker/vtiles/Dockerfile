@@ -24,4 +24,5 @@ RUN make -j && make install
 RUN rm -rf /tmp/tippecanoe-src && yum -y groupremove "Development Tools"
 
 WORKDIR /tmp
-COPY build-tiles.sh .
+COPY config.sh .
+COPY docker/vtiles/build-tiles.sh .
