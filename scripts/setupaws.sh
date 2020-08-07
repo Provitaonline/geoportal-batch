@@ -34,7 +34,7 @@ while [[ "$n" != "q" ]]; do
     aws iam create-user --user-name geoportalp
 
     echo "Create S3 bucket"
-    aws s3api create-bucket --bucket "geoportalp-files" --create-bucket-configuration LocationConstraint="us-east-2" --acl "public-read"
+    aws s3api create-bucket --bucket "geoportalp-files" --create-bucket-configuration LocationConstraint="$REGION" --acl "public-read"
     aws s3api put-bucket-cors --bucket "geoportalp-files" --cors-configuration file://cors.json
 
     echo "Create and attach API user access policy"
@@ -83,21 +83,20 @@ while [[ "$n" != "q" ]]; do
   fi
   if [[ $n == 4  ||  $n == 6 ]]; then
     echo "Build and tag container images"
-    region=$(aws configure get region)
-    aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $AWS_ACCOUNT.dkr.ecr.$region.amazonaws.com
+    aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com
     docker build -t geoportalp-rtiles ../rtiles
     docker build -t geoportalp-vtiles ../vtiles
 
     docker tag geoportalp-rtiles:latest $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-rtiles:latest
     docker tag geoportalp-vtiles:latest $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-vtiles:latest
     echo "Push container images"
-    docker push $AWS_ACCOUNT.dkr.ecr.us-east-2.amazonaws.com/geoportalp-rtiles:latest
-    docker push $AWS_ACCOUNT.dkr.ecr.us-east-2.amazonaws.com/geoportalp-vtiles:latest
+    docker push $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-rtiles:latest
+    docker push $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-vtiles:latest
   fi
   if [[ $n == 5  ||  $n == 6 ]]; then
     echo "Create job queues"
-    aws batch create-job-queue --job-queue-name geoportalp-rtiles --priority 1 --compute-environment-order order=1,computeEnvironment=arn:aws:batch:us-east-2:$AWS_ACCOUNT:compute-environment/geoportalp-spot
-    aws batch create-job-queue --job-queue-name geoportalp-vtiles --priority 1 --compute-environment-order order=1,computeEnvironment=arn:aws:batch:us-east-2:$AWS_ACCOUNT:compute-environment/geoportalp-spot
+    aws batch create-job-queue --job-queue-name geoportalp-rtiles --priority 1 --compute-environment-order order=1,computeEnvironment=arn:aws:batch:$REGION:$AWS_ACCOUNT:compute-environment/geoportalp-spot
+    aws batch create-job-queue --job-queue-name geoportalp-vtiles --priority 1 --compute-environment-order order=1,computeEnvironment=arn:aws:batch:$REGION:$AWS_ACCOUNT:compute-environment/geoportalp-spot
 
     echo "Create job definitions"
     cat job-definition-rtiles.json | jq ".containerProperties += {image: \"$AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-rtiles\"} |
