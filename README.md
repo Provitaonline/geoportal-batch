@@ -18,16 +18,20 @@ Tiles are generated using the AWS batch capability. Tile generation scripts are 
 
 ```
 scripts
+
+  config.sh (Config variables)
   setupaws.sh (Main configuration script)
   *.json (aws cli configuration files)
 
-rtiles
-  build-tiles.sh (Raster tiles builder script)
-  Dockerfile (Docker image generation script)
+  docker
 
-vtiles
-  build-tiles.sh (Vector tiles builder script)
-  Dockerfile (Docker image generation script)
+    rtiles
+      build-tiles.sh (Raster tiles builder script)
+      Dockerfile (Docker image generation script)
+
+    vtiles
+      build-tiles.sh (Vector tiles builder script)
+      Dockerfile (Docker image generation script)
 
 ```
 
