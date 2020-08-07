@@ -5,6 +5,8 @@ if [ -z $AWS_ACCOUNT ]; then
   exit
 fi
 REGION=$(aws configure get region)
+source ./config.sh
+
 while [[ "$n" != "q" ]]; do
 
   echo
@@ -13,6 +15,7 @@ while [[ "$n" != "q" ]]; do
   echo "Setup AWS environment to support geoportalp"
   echo "Using AWS account: $AWS_ACCOUNT"
   echo "Region: $REGION"
+  echo "Bucket: $BUCKET"
   echo
   echo "***********************************************"
   echo
@@ -34,11 +37,12 @@ while [[ "$n" != "q" ]]; do
     aws iam create-user --user-name geoportalp
 
     echo "Create S3 bucket"
-    aws s3api create-bucket --bucket "geoportalp-files" --create-bucket-configuration LocationConstraint="$REGION" --acl "public-read"
-    aws s3api put-bucket-cors --bucket "geoportalp-files" --cors-configuration file://cors.json
+    aws s3api create-bucket --bucket "$BUCKET" --create-bucket-configuration LocationConstraint="$REGION" --acl "public-read"
+    aws s3api put-bucket-cors --bucket "$BUCKET" --cors-configuration file://cors.json
 
     echo "Create and attach API user access policy"
-    aws iam create-policy --policy-name geoportalp --policy-document file://api-access-policy.json
+    sed "s/{{BUCKET}}/$BUCKET/" api-access-policy.json > api-access-policy-updated.json
+    aws iam create-policy --policy-name geoportalp --policy-document file://api-access-policy-updated.json
     aws iam attach-user-policy --policy-arn "arn:aws:iam::$AWS_ACCOUNT:policy/geoportalp" --user-name "geoportalp"
 
     echo "Create AWSBatchServiceRole, ecsInstanceRole, ecsTaskExecutionRole, AmazonEC2SpotFleetRole"
