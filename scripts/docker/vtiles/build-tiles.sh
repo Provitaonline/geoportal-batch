@@ -1,7 +1,10 @@
 #!/bin/bash
 # exit on error
 set -e
-baseurl="https://geoportalp-files.s3-us-east-2.amazonaws.com"
+source ./config.sh
+REGION=$(aws configure get region)
+
+baseurl="https://$BUCKET.s3-$REGION.amazonaws.com"
 # cd /tmp
 filename=$1
 echo "get $baseurl/files/$filename"
@@ -18,6 +21,6 @@ tippecanoe -q --force --layer=$namelc --name=$namelc --minimum-zoom=4 --maximum-
 gzip vtiles/$namelc/metadata.json
 mv vtiles/$namelc/metadata.json.gz vtiles/$namelc/metadata.json
 echo "remove old tiles from vtiles/$namelc"
-aws s3 rm s3://geoportalp-files --quiet --recursive --exclude "*" --include "vtiles/$namelc*"
+aws s3 rm s3://$BUCKET --quiet --recursive --exclude "*" --include "vtiles/$namelc*"
 echo "upload generated tiles to vtiles/$namelc"
-aws s3 cp vtiles s3://geoportalp-files/vtiles --acl "public-read" --content-encoding "gzip" --quiet --recursive
+aws s3 cp vtiles s3://$BUCKET/vtiles --acl "public-read" --content-encoding "gzip" --quiet --recursive

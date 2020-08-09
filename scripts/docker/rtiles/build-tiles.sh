@@ -1,8 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 # exit on error
 set -e
+source ./config.sh
+REGION=$(aws configure get region)
 
-baseurl="https://geoportalp-files.s3-us-east-2.amazonaws.com"
+baseurl="https://$BUCKET.s3-$REGION.amazonaws.com"
 
 # Timestamp function
 timestamp() {
@@ -32,7 +34,7 @@ echo -e "\n"
 
 # Copy tiles to S3
 echo $(timestamp): "remove old tiles from rtiles/$namelc"
-aws s3 rm s3://geoportalp-files --quiet --recursive --exclude "*" --include "rtiles/$namelc*"
+aws s3 rm s3://$BUCKET --quiet --recursive --exclude "*" --include "rtiles/$namelc*"
 echo $(timestamp): "upload generated tiles to rtiles/$namelc"
-aws s3 cp rtiles s3://geoportalp-files/rtiles --acl "public-read" --quiet --recursive
+aws s3 cp rtiles s3://$BUCKET/rtiles --acl "public-read" --quiet --recursive
 echo $(timestamp): "finished processing"
