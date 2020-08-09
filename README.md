@@ -4,7 +4,7 @@ This project is part of the source for Provita's Geographical Information Portal
 
 ## Development environment
 
-The configuration script is written in ```bash```.
+Shell scripts are written in ```bash```.
 
 Tiles are generated using the AWS batch capability. Tile generation scripts are packaged as Docker images which are stored in the AWS Elastic Container Registry (ECR).
 
@@ -13,6 +13,7 @@ Tiles are generated using the AWS batch capability. Tile generation scripts are 
 * ```bash```
 * [docker](https://www.docker.com/)
 * [aws cli](https://aws.amazon.com/cli/)
+* [jq](https://stedolan.github.io/jq/)
 
 ## Directory structure
 
