@@ -4,7 +4,7 @@ if [ -z $AWS_ACCOUNT ]; then
   echo "To use this script, you must be connected to AWS (aws configure)"
   exit
 fi
-REGION=$(aws configure get region)
+
 source ./config.sh
 
 while [[ "$n" != "q" ]]; do

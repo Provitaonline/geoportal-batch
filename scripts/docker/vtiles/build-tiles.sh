@@ -2,7 +2,6 @@
 # exit on error
 set -e
 source ./config.sh
-REGION=$(aws configure get region)
 
 baseurl="https://$BUCKET.s3-$REGION.amazonaws.com"
 # cd /tmp
