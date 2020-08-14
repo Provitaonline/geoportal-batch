@@ -6,6 +6,7 @@ FROM amazonlinux:latest
 RUN yum -y install deltarpm
 RUN yum -y install which unzip aws-cli git sqlite-devel curl
 RUN yum -y groupinstall "Development Tools"
+RUN yum -y install jq
 
 # Install nodejs
 RUN curl -sL https://rpm.nodesource.com/setup_12.x | bash
@@ -25,4 +26,5 @@ RUN rm -rf /tmp/tippecanoe-src && yum -y groupremove "Development Tools"
 
 WORKDIR /tmp
 COPY config.sh .
+COPY check-running-jobs.sh .
 COPY docker/vtiles/build-tiles.sh .

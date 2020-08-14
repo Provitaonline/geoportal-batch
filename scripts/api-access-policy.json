@@ -4,8 +4,9 @@
     {
       "Effect": "Allow",
       "Action": [
-          "batch:SubmitJob",
-          "batch:ListJobs"
+        "batch:DescribeJobs",
+        "batch:SubmitJob",
+        "batch:ListJobs"
       ],
       "Resource": "*"
     },
