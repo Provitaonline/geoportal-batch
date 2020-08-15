@@ -6,7 +6,7 @@ source ./config.sh
 baseurl="https://$BUCKET.s3-$REGION.amazonaws.com"
 
 jobqueue="geoportalp-vtiles"
-source ./check-running-jobs.sh
+# source ./check-running-jobs.sh
 
 # cd /tmp
 filename=$1

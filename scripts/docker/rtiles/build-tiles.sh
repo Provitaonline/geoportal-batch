@@ -7,7 +7,7 @@ source ./config.sh
 baseurl="https://$BUCKET.s3-$REGION.amazonaws.com"
 jobqueue="geoportalp-rtiles"
 
-source ./check-running-jobs.sh
+# source ./check-running-jobs.sh
 
 # Create color table file
 echo $2 | sed "s/:/: /g" | tr "-" "\n" > color.txt
