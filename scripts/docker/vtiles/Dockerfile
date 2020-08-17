@@ -26,5 +26,4 @@ RUN rm -rf /tmp/tippecanoe-src && yum -y groupremove "Development Tools"
 
 WORKDIR /tmp
 COPY config.sh .
-COPY check-running-jobs.sh .
 COPY docker/vtiles/build-tiles.sh .
