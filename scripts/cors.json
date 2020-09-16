@@ -3,6 +3,7 @@
     {
       "AllowedOrigins": ["*"],
       "AllowedHeaders": ["*"],
+      "ExposeHeader": "Content-Length",
       "AllowedMethods": ["GET", "PUT", "POST", "DELETE", "HEAD"]
     }
   ]
