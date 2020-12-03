@@ -21,6 +21,6 @@
     "resourceRequirements": []
   },
   "timeout": {
-    "attemptDurationSeconds": 2400
+    "attemptDurationSeconds": 7200
   }
 }
