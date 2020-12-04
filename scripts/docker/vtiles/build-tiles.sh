@@ -21,6 +21,6 @@ tippecanoe -q --force --layer=$namelc --name=$namelc --minimum-zoom=4 --maximum-
 gzip vtiles/$namelc/metadata.json
 mv vtiles/$namelc/metadata.json.gz vtiles/$namelc/metadata.json
 echo "remove old tiles from vtiles/$namelc"
-aws s3 rm s3://$BUCKET --quiet --recursive --exclude "*" --include "vtiles/$namelc*"
+aws s3 rm s3://$BUCKET --quiet --recursive --exclude "*" --include "vtiles/$namelc/*"
 echo "upload generated tiles to vtiles/$namelc"
 aws s3 cp vtiles s3://$BUCKET/vtiles --acl "public-read" --content-encoding "gzip" --quiet --recursive

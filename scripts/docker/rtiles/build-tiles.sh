@@ -29,7 +29,7 @@ echo -e "\n"
 
 # Copy tiles to S3
 echo "remove old tiles from rtiles/$namelc"
-aws s3 rm s3://$BUCKET --quiet --recursive --exclude "*" --include "rtiles/$namelc*"
+aws s3 rm s3://$BUCKET --quiet --recursive --exclude "*" --include "rtiles/$namelc/*"
 echo "upload generated tiles to rtiles/$namelc"
 aws s3 cp rtiles s3://$BUCKET/rtiles --acl "public-read" --quiet --recursive
 echo "finished processing"
