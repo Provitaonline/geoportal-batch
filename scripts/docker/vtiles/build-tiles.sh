@@ -23,4 +23,4 @@ mv vtiles/$namelc/metadata.json.gz vtiles/$namelc/metadata.json
 echo "remove old tiles from vtiles/$namelc"
 aws s3 rm s3://$BUCKET --quiet --recursive --exclude "*" --include "vtiles/$namelc/*"
 echo "upload generated tiles to vtiles/$namelc"
-aws s3 cp vtiles s3://$BUCKET/vtiles --acl "public-read" --content-encoding "gzip" --quiet --recursive
+aws s3 cp vtiles s3://$BUCKET/vtiles --acl "public-read" --content-encoding "gzip" --only-show-errors --recursive
