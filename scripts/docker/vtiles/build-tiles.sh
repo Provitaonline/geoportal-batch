@@ -17,7 +17,7 @@ echo "generate geojson for tippecanoe"
 mapshaper -quiet -i $name/$name.shp -o format=geojson precision=0.0001 $namelc.geojson
 echo "generate tiles"
 mkdir -p vtiles
-tippecanoe -q --force --layer=$namelc --name=$namelc --minimum-zoom=4 --maximum-zoom=10 --output-to-directory vtiles/$namelc $namelc.geojson
+tippecanoe -q --force --layer=$namelc --name=$namelc -r1 --minimum-zoom=4 --maximum-zoom=10 --output-to-directory vtiles/$namelc $namelc.geojson
 gzip vtiles/$namelc/metadata.json
 mv vtiles/$namelc/metadata.json.gz vtiles/$namelc/metadata.json
 echo "remove old tiles from vtiles/$namelc"
