@@ -19,7 +19,7 @@ echo "derived name: $namelc"
 
 # Generate tiles
 echo "create virtual raster with colors"
-if [ $3 = "exact" ]; then EXACT="-exact_color_entry"; else EXACT=""; fi
+if [ $3 = "exact" ]; then EXACT="-nearest_color_entry"; else EXACT=""; fi
 
 gdaldem color-relief -alpha $EXACT -of vrt $filename color.txt temp.vrt
 
