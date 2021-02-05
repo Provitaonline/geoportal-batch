@@ -11,8 +11,8 @@ echo $2 | sed "s/:/: /g" | tr "-" "\n" > color.txt
 
 # Get source file
 filename=$1
-echo "$baseurl/files/$filename"
-curl -s -O $baseurl/files/$filename
+echo "$baseurl/files/geotiff/$filename"
+curl -s -O $baseurl/files/geotiff/$filename
 name=${filename%.*}
 namelc="$(echo "$name" | tr '[:upper:]' '[:lower:]')"
 echo "derived name: $namelc"
