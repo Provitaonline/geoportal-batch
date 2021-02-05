@@ -6,9 +6,6 @@ source ./config.sh
 
 baseurl="https://$BUCKET.s3-$REGION.amazonaws.com"
 
-# Create color table file
-echo $2 | sed "s/:/: /g" | tr "-" "\n" > color.txt
-
 # Get source file
 filename=$1
 echo "$baseurl/files/geotiff/$filename"
@@ -22,6 +19,9 @@ echo "unzipping $filename"
 unzip $filename
 echo "go to directory $name"
 cd $name
+
+# Create color table file
+echo $2 | sed "s/:/: /g" | tr "-" "\n" > color.txt
 
 # Generate tiles
 echo "create virtual raster with colors from $name.tif"
