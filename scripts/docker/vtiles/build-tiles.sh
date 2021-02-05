@@ -7,8 +7,8 @@ baseurl="https://$BUCKET.s3-$REGION.amazonaws.com"
 
 # cd /tmp
 filename=$1
-echo "get $baseurl/files/$filename"
-curl -s -O $baseurl/files/$filename
+echo "get $baseurl/files/shapefile/$filename"
+curl -s -O $baseurl/files/shapefile/$filename
 name=${filename%.*}
 namelc="$(echo "$name" | tr '[:upper:]' '[:lower:]')"
 echo "derived name: $namelc"
