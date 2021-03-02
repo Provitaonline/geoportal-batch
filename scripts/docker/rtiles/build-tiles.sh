@@ -11,7 +11,8 @@ filename=$1
 # Get source source directory
 directory=$4
 echo "$baseurl/$directory/geotiff/$filename"
-curl -s -O $baseurl/$directory/geotiff/$filename
+# curl -s -O $baseurl/$directory/geotiff/$filename
+aws s3 cp s3://$BUCKET/$directory/geotiff/$filename $filename
 name=${filename%.*}
 namelc="$(echo "$name" | tr '[:upper:]' '[:lower:]')"
 echo "derived name: $namelc"
