@@ -12,7 +12,8 @@
       "./build-tiles.sh",
       "Ref::inputFile",
       "Ref::colorTable",
-      "Ref::exactColorEntry"
+      "Ref::exactColorEntry",
+      "Ref::sourceDirectory"
     ],
     "volumes": [],
     "environment": [],
