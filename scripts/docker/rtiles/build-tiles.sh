@@ -8,8 +8,10 @@ baseurl="https://$BUCKET.s3-$REGION.amazonaws.com"
 
 # Get source file
 filename=$1
-echo "$baseurl/files/geotiff/$filename"
-curl -s -O $baseurl/files/geotiff/$filename
+# Get source source directory
+directory=$4
+echo "$baseurl/$directory/geotiff/$filename"
+curl -s -O $baseurl/$directory/geotiff/$filename
 name=${filename%.*}
 namelc="$(echo "$name" | tr '[:upper:]' '[:lower:]')"
 echo "derived name: $namelc"
