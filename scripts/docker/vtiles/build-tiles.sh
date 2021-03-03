@@ -7,8 +7,9 @@ baseurl="https://$BUCKET.s3-$REGION.amazonaws.com"
 
 # cd /tmp
 filename=$1
-echo "get $baseurl/files/shapefile/$filename"
-curl -s -O $baseurl/files/shapefile/$filename
+directory=$2
+echo "get $baseurl/$directory/shapefile/$filename"
+aws s3 cp s3://$BUCKET/$directory/geotiff/$filename $filename --no-progress
 name=${filename%.*}
 namelc="$(echo "$name" | tr '[:upper:]' '[:lower:]')"
 echo "derived name: $namelc"

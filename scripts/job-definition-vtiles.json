@@ -10,7 +10,8 @@
     "memory": 1024,
     "command": [
       "./build-tiles.sh",
-      "Ref::inputFile"
+      "Ref::inputFile",
+      "Ref::sourceDirectory"
     ],
     "volumes": [],
     "environment": [],
