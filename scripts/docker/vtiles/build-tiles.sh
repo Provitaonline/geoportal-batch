@@ -15,7 +15,7 @@ namelc="$(echo "$name" | tr '[:upper:]' '[:lower:]')"
 echo "derived name: $namelc"
 unzip -q -o $filename
 echo "generate geojson for tippecanoe"
-mapshaper -quiet -i $name/$name.shp -o format=geojson precision=0.0001 $namelc.geojson
+node --max-old-space-size=8192 `which mapshaper` -quiet -i $name/$name.shp -o format=geojson precision=0.0001 $namelc.geojson
 echo "generate tiles"
 mkdir -p vtiles
 tippecanoe -q --force --layer=$namelc --name=$namelc -r1 --minimum-zoom=4 --maximum-zoom=10 --output-to-directory vtiles/$namelc $namelc.geojson
