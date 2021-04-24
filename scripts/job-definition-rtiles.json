@@ -6,8 +6,8 @@
     "attempts": 2
   },
   "containerProperties": {
-    "vcpus": 1,
-    "memory": 1024,
+    "vcpus": 2,
+    "memory": 2048,
     "command": [
       "./build-tiles.sh",
       "Ref::inputFile",

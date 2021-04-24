@@ -7,7 +7,7 @@
   },
   "containerProperties": {
     "vcpus": 1,
-    "memory": 1024,
+    "memory": 4096,
     "command": [
       "./build-tiles.sh",
       "Ref::inputFile",
