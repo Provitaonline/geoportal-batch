@@ -1,0 +1,23 @@
+{
+  "jobDefinitionName": "geoportalp-cbundles",
+  "type": "container",
+  "parameters": {},
+  "retryStrategy": {
+    "attempts": 2
+  },
+  "containerProperties": {
+    "vcpus": 2,
+    "memory": 2048,
+    "command": [
+      "./build-tars.sh"
+    ],
+    "volumes": [],
+    "environment": [],
+    "mountPoints": [],
+    "ulimits": [],
+    "resourceRequirements": []
+  },
+  "timeout": {
+    "attemptDurationSeconds": 1000
+  }
+}

@@ -84,23 +84,29 @@ while [[ "$n" != "q" ]]; do
     echo "Create container repos"
     aws ecr create-repository --repository-name geoportalp-rtiles
     aws ecr create-repository --repository-name geoportalp-vtiles
+    aws ecr create-repository --repository-name geoportalp-cbundles
   fi
   if [[ $n == 4  ||  $n == 6 ]]; then
     echo "Build and tag container images"
     aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com
     docker build -t geoportalp-rtiles -f docker/rtiles/Dockerfile .
     docker build -t geoportalp-vtiles -f docker/vtiles/Dockerfile .
+    docker build -t geoportalp-cbundles -f docker/vtiles/Dockerfile .
 
     docker tag geoportalp-rtiles:latest $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-rtiles:latest
     docker tag geoportalp-vtiles:latest $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-vtiles:latest
+    docker tag geoportalp-cbundles:latest $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-cbundles:latest
+
     echo "Push container images"
     docker push $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-rtiles:latest
     docker push $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-vtiles:latest
+    docker push $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-cbundles:latest
   fi
   if [[ $n == 5  ||  $n == 6 ]]; then
     echo "Create job queues"
     aws batch create-job-queue --job-queue-name geoportalp-rtiles --priority 1 --compute-environment-order order=1,computeEnvironment=arn:aws:batch:$REGION:$AWS_ACCOUNT:compute-environment/geoportalp-spot
     aws batch create-job-queue --job-queue-name geoportalp-vtiles --priority 1 --compute-environment-order order=1,computeEnvironment=arn:aws:batch:$REGION:$AWS_ACCOUNT:compute-environment/geoportalp-spot
+    aws batch create-job-queue --job-queue-name geoportalp-cbundles --priority 1 --compute-environment-order order=1,computeEnvironment=arn:aws:batch:$REGION:$AWS_ACCOUNT:compute-environment/geoportalp-spot
 
     echo "Create job definitions"
     cat job-definition-rtiles.json | jq ".containerProperties += {image: \"$AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-rtiles\"} |
@@ -111,6 +117,9 @@ while [[ "$n" != "q" ]]; do
       .containerProperties += {jobRoleArn: \"arn:aws:iam::$AWS_ACCOUNT:role/ecsTaskExecutionRole\"}" > job-definition-vtiles-updated.json
     aws batch register-job-definition --cli-input-json file://job-definition-vtiles-updated.json
 
+    cat job-definition-cbundles.json | jq ".containerProperties += {image: \"$AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-cbundles\"} |
+      .containerProperties += {jobRoleArn: \"arn:aws:iam::$AWS_ACCOUNT:role/ecsTaskExecutionRole\"}" > job-definition-cbundles-updated.json
+    aws batch register-job-definition --cli-input-json file://job-definition-cbundles-updated.json
   fi
   if [[ $n == 6 ]]; then
     break
