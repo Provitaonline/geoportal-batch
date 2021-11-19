@@ -91,7 +91,7 @@ while [[ "$n" != "q" ]]; do
     aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com
     docker build -t geoportalp-rtiles -f docker/rtiles/Dockerfile .
     docker build -t geoportalp-vtiles -f docker/vtiles/Dockerfile .
-    docker build -t geoportalp-cbundles -f docker/vtiles/Dockerfile .
+    docker build -t geoportalp-cbundles -f docker/cbundles/Dockerfile .
 
     docker tag geoportalp-rtiles:latest $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-rtiles:latest
     docker tag geoportalp-vtiles:latest $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/geoportalp-vtiles:latest
