@@ -26,6 +26,11 @@ scripts
 
   docker
 
+    cbundles
+      build-tars.sh (Creates collection tar files by invoking targenscript.js, then do-tars.sh)
+      Dockerfile (Docker image generation script)
+      targenscript.js (Builds a script [do-tars.sh] that actually creates the tars)
+
     rtiles
       build-tiles.sh (Raster tiles builder script)
       Dockerfile (Docker image generation script)

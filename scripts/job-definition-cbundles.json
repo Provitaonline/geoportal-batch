@@ -1,17 +1,15 @@
 {
-  "jobDefinitionName": "geoportalp-vtiles",
+  "jobDefinitionName": "geoportalp-cbundles",
   "type": "container",
   "parameters": {},
   "retryStrategy": {
     "attempts": 2
   },
   "containerProperties": {
-    "vcpus": 1,
-    "memory": 4096,
+    "vcpus": 2,
+    "memory": 2048,
     "command": [
-      "./build-tiles.sh",
-      "Ref::inputFile",
-      "Ref::sourceDirectory"
+      "./build-tars.sh"
     ],
     "volumes": [],
     "environment": [],
@@ -20,6 +18,6 @@
     "resourceRequirements": []
   },
   "timeout": {
-    "attemptDurationSeconds": 7200
+    "attemptDurationSeconds": 1000
   }
 }
